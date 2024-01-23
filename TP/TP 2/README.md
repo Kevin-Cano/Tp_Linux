@@ -1,5 +1,7 @@
 # TP 2
 
+# Partie : Files and users
+
 ## I. Fichiers
 
 ### 1. Find me
@@ -69,3 +71,106 @@ Connection to 10.1.1.101 closed.
 [marmotte@Tp2 ~]$ cd /home/kevin/
 -bash: cd: /home/kevin/: Permission denied
 ```
+
+# Partie 2 : Programmes et paquets
+
+## I. Programmes et processus
+
+### 1. Run then kill
+
+#### 🌞 Lancer un processus sleep
+
+```powershell
+[kevin@Tp2 ~]$ ps -e | grep sleep
+   1409 pts/0    00:00:00 sleep
+``` 
+
+#### 🌞 Terminez le processus sleep depuis le deuxième terminal
+
+```powershell
+[kevin@Tp2 ~]$ sudo kill 1409
+```
+
+### 2. Tâche de fond
+
+#### 🌞 Lancer un nouveau processus sleep, mais en tâche de fond
+
+```powershell
+[kevin@Tp2 /]$ sleep 1000 &
+[1] 1418
+```
+
+#### 🌞 Visualisez la commande en tâche de fond
+
+```powershell
+[kevin@Tp2 ~]$ ps -e | grep sleep
+   1418 pts/0    00:00:00 sleep
+```
+
+### 3. Find paths
+
+#### 🌞 Trouver le chemin où est stocké le programme sleep
+
+```powershell
+[kevin@Tp2 /]$ ls -al usr/bin | grep sleep
+-rwxr-xr-x.  1 root root   36312 Apr 24  2023 sleep
+```
+
+#### 🌞 Tant qu'on est à chercher des chemins : trouver les chemins vers tous les fichiers qui s'appellent .bashrc
+
+```powershell
+[kevin@Tp2 /]$ sudo find -name .bashrc
+./etc/skel/.bashrc
+./root/.bashrc
+./home/kevin/.bashrc
+./home/papier_alu/.bashrc
+```
+
+### 4. La variable PATH
+
+#### 🌞 Vérifier que
+
+```powershell
+[kevin@Tp2 /]$ echo $PATH
+/home/kevin/.local/bin:/home/kevin/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin
+[kevin@Tp2 /]$ which sleep ssh ping
+/usr/bin/sleep
+/usr/bin/ssh
+/usr/bin/ping
+```
+
+## II. Paquets
+
+#### 🌞 Installer le paquet git
+
+```powershell
+[kevin@Tp2 /]$ sudo dnf install git -y
+```
+
+#### 🌞 Utiliser une commande pour lancer git
+
+```powershell 
+[kevin@Tp2 /]$ which git
+/usr/bin/git
+```
+
+#### 🌞 Installer le paquet nginx
+
+```powershell
+[kevin@Tp2 /]$ sudo dnf install nginx -y
+```
+
+#### 🌞 Déterminer
+
+```powershell
+[kevin@Tp2 /]$ cd /var/log/nginx/
+[kevin@Tp2 /]$ cd /etc/nginx/
+```
+
+#### 🌞 Mais aussi déterminer...
+
+```powershell
+[kevin@Tp2 /]$ cd /etc/yum.repos.d
+[kevin@Tp2 yum.repos.d]$ grep -nri http
+```
+
