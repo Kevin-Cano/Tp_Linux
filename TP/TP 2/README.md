@@ -174,3 +174,97 @@ Connection to 10.1.1.101 closed.
 [kevin@Tp2 yum.repos.d]$ grep -nri http
 ```
 
+# Partie 3 : Poupée russe
+
+#### 🌞 Récupérer le fichier meow
+
+```powershell
+[kevin@Tp2 ~]$ sudo dnf install wget -y
+[kevin@Tp2 ~]$ wget https://gitlab.com/it4lik/b1-linux-2023/-/raw/master/tp/2/meow?inline=false
+[kevin@Tp2 ~]$ mv 'meow?inline=false' meow
+```
+
+#### 🌞 Trouver le dossier dawa/
+
+```powershell
+# ZIP
+[kevin@localhost ~]$ file meow
+meow: Zip archive data, at least v2.0 to extract
+[kevin@localhost ~]$ mv meow meow.zip
+[kevin@localhost ~]$ sudo dnf install unzip
+[kevin@localhost ~]$ sudo unzip meow.zip
+Archive:  meow.zip
+  inflating: meow
+# XZ
+[kevin@localhost ~]$ file meow
+meow: XZ compressed data
+[kevin@localhost ~]$ mv meow meow.xz
+[kevin@localhost ~]$ sudo unxz meow.xz
+# BZIP2
+[kevin@localhost ~]$ file meow
+meow: bzip2 compressed data, block size = 900k
+[kevin@localhost ~]$ sudo dnf install bzip2
+[kevin@localhost ~]$ mv meow meow.bz2
+[kevin@localhost ~]$ bzip2 -d meow.bz2
+# RAR
+[kevin@localhost ~]$ file meow
+meow: RAR archive data, v5
+[kevin@localhost ~]$ sudo mv meow meow.rar
+[kevin@localhost ~]$ sudo dnf install https://download1.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-8.noarch.rpm
+[kevin@localhost ~]$ sudo dnf install unrar
+[kevin@localhost ~]$ sudo unrar e meow.rar
+# GZIP
+[kevin@localhost ~]$ file meow
+meow: gzip compressed data, from Unix, original size modulo 2^32 145049600
+[kevin@localhost ~]$ mv meow meow.gz
+[kevin@localhost ~]$ sudo gunzip meow.gz
+# TAR
+[kevin@localhost ~]$ file meow
+meow: POSIX tar archive (GNU)
+[kevin@localhost ~]$ mv meow meow.tar
+[kevin@localhost ~]$ tar -xf meow.tar
+```
+
+#### 🌞 Dans le dossier dawa/, déterminer le chemin vers
+
+- Le seul fichier de 15Mo
+
+```powershell
+[kevin@Tp2 dawa]$ find -size 15M
+./folder31/19/file39
+```
+
+- Le seul fichier qui ne contient que des 7
+
+```powershell
+[kevin@Tp2 dawa]$ grep "777777" -r
+folder43/38/file41:77777777777
+```
+
+- Le seul fichier qui est nommé cookie
+
+```powershell
+[kevin@Tp2 dawa]$ find -name cookie
+./folder14/25/cookie
+```
+
+- Le seul fichier caché
+
+```powershell
+[kevin@Tp2 dawa]$ find -name '.*'
+./folder32/14/.hidden_file
+```
+
+- Le seul fichier qui date de 2014
+
+```powershell
+[kevin@Tp2 dawa]$ find -newermt 2014-01-01 ! -newermt 2015-01-01
+./folder36/40/file43
+```
+
+- Le seul fichier qui a 5 dossiers-parents
+
+```powershell
+[kevin@Tp2 dawa]$ find -type f -path "*/*/*/*/*/*/*"
+./folder37/45/23/43/54/file43
+```
