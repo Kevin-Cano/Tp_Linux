@@ -142,5 +142,109 @@ Complete!
 #### 🌞 Déterminer les processus liés au service NGINX
 
 ```powershell
-
+[kevin@TP ~]$ ps -ef | grep nginx
+root        1382       1  0 13:51 ?        00:00:00 nginx: master process /usr/sbin/nginx
+nginx       1383    1382  0 13:51 ?        00:00:00 nginx: worker process
 ```
+
+#### 🌞 Déterminer le nom de l'utilisateur qui lance NGINX
+
+```powershell
+[kevin@TP ~]$ cat /etc/passwd | grep nginx
+nginx:x:991:991:Nginx web server:/var/lib/nginx:/sbin/nologin
+```
+
+#### 🌞 Test !
+
+```powershell
+[kevin@TP ~]$ curl http://10.1.1.101 | head -n 7
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0<!doctype html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>HTTP Server Test Page powered by: Rocky Linux</title>
+    <style type="text/css">
+100  7620  100  7620    0     0   744k      0 --:--:-- --:--:-- --:--:--  826k
+```
+
+### 2. Analyser la conf de NGINX
+
+#### 🌞 Déterminer le path du fichier de configuration de NGINX
+
+```powershell
+[kevin@TP ~]$ ls -al /etc/nginx/nginx.conf
+-rw-r--r--. 1 root root 2334 Oct 16 20:00 /etc/nginx/nginx.conf
+```
+
+#### 🌞 Trouver dans le fichier de conf
+
+```powershell
+[kevin@TP ~]$ cat /etc/nginx/nginx.conf | grep server -A 10
+    server {
+        listen       80;
+        listen       [::]:80;
+        server_name  _;
+        root         /usr/share/nginx/html;
+
+        # Load configuration files for the default server block.
+        include /etc/nginx/default.d/*.conf;
+
+        error_page 404 /404.html;
+        location = /404.html {
+        }
+
+        error_page 500 502 503 504 /50x.html;
+        location = /50x.html {
+        }
+    }
+```
+
+```powershell
+[kevin@TP ~]$ cat /etc/nginx/nginx.conf | grep include
+include /usr/share/nginx/modules/*.conf;
+    include             /etc/nginx/mime.types;
+    # See http://nginx.org/en/docs/ngx_core_module.html#include
+    include /etc/nginx/conf.d/*.conf;
+        include /etc/nginx/default.d/*.conf;
+#        include /etc/nginx/default.d/*.conf;
+```
+
+### 3. Déployer un nouveau site web
+
+#### 🌞 Créer un site web
+
+```powershell
+[kevin@TP tp3_linux]$ cat index.html
+<h1>MEOW mon premier serveur web</h1>
+```
+
+#### 🌞 Gérer les permissions
+
+```powershell
+[kevin@TP tp3_linux]$ sudo chown nginx /var/www/tp3_linux/
+[kevin@TP www]$ ll
+drwxr-xr-x. 2 nginx root 24 Jan 30 14:48 tp3_linux
+```
+
+```powershell
+[kevin@TP tp3_linux]$ sudo nano /etc/nginx/nginx.conf
+# Supression du bloc server {}
+[kevin@TP ~]$ cd /etc/nginx/conf.d/
+[kevin@TP conf.d]$ echo $RANDOM
+22443
+[kevin@TP conf.d]$ sudo nano meow.conf
+[kevin@TP conf.d]$ sudo firewall-cmd --add-port=22443/tcp --permanent
+[kevin@TP conf.d]$ sudo firewall-cmd --reload
+[kevin@TP conf.d]$ sudo systemctl restart nginx
+```
+
+#### 🌞 Visitez votre super site web
+
+```powershell
+[kevin@TP conf.d]$ curl http://10.1.1.101:22443
+<h1>MEOW mon premier serveur web</h1>
+```
+
