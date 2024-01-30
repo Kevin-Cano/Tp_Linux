@@ -248,3 +248,114 @@ drwxr-xr-x. 2 nginx root 24 Jan 30 14:48 tp3_linux
 <h1>MEOW mon premier serveur web</h1>
 ```
 
+## III. Your own services
+
+### 2. Analyse des services existants
+
+#### 🌞 Afficher le fichier de service SSH
+
+```powershell
+[kevin@TP ~]$ sudo cat /usr/lib/systemd/system/sshd.service | grep ExecStart=
+ExecStart=/usr/sbin/sshd -D $OPTIONS
+```
+
+#### 🌞 Afficher le fichier de service NGINX
+
+```powershell
+[kevin@TP ~]$ sudo cat /usr/lib/systemd/system/nginx.service | grep ExecStart=
+ExecStart=/usr/sbin/nginx
+```
+
+### 3. Création de service
+
+#### 🌞 Créez le fichier /etc/systemd/system/tp3_nc.service
+
+```powershell
+[kevin@TP ~]$ sudo touch /etc/systemd/system/tp3_nc.service
+[kevin@TP ~]$ echo $RANDOM
+21191
+[kevin@TP ~]$ sudo nano /etc/systemd/system/tp3_nc.service
+[kevin@TP system]$ cat tp3_nc.service
+[Unit]
+Description=Super netcat tout fou
+
+[Service]
+ExecStart=/usr/bin/nc -l 21191 -k
+```
+
+#### 🌞 Indiquer au système qu'on a modifié les fichiers de service
+
+```powershell
+[kevin@TP system]$ sudo systemctl daemon-reload
+```
+
+#### 🌞 Démarrer notre service de ouf
+
+```powershell
+[kevin@TP system]$ sudo systemctl start tp3_nc
+```
+
+#### 🌞 Vérifier que ça fonctionne
+
+- Vérifier que le service tourne avec un systemctl status
+
+```powershell
+[kevin@TP system]$ sudo systemctl status tp3_nc
+● tp3_nc.service - Super netcat tout fou
+     Loaded: loaded (/etc/systemd/system/tp3_nc.service; static)
+     Active: active (running) since Tue 2024-01-30 17:11:30 CET; 2min 22s ago
+   Main PID: 1396 (nc)
+      Tasks: 1 (limit: 4674)
+     Memory: 1.1M
+        CPU: 9ms
+     CGroup: /system.slice/tp3_nc.service
+             └─1396 /usr/bin/nc -l 21191 -k
+
+Jan 30 17:11:30 TP systemd[1]: Started Super netcat tout fou.
+```
+
+- Vérifier que nc écoute bien derrière un port avec un ss
+
+```powershell
+[kevin@TP system]$ ss -alntp | grep 21191
+LISTEN 0      10           0.0.0.0:21191      0.0.0.0:*
+LISTEN 0      10              [::]:21191         [::]:*
+```
+
+- Vérifer que juste ça fonctionne en vous connectant au service depuis une autre VM ou votre PC
+
+```powershell
+
+```
+
+#### 🌞 Les logs de votre service
+
+- Une commande journalctl filtrée avec grep qui affiche la ligne qui indique le démarrage du service
+
+```powershell
+
+```
+
+- Une commande journalctl filtrée avec grep qui affiche un message reçu qui a été envoyé par le client
+
+```powershell
+
+```
+
+- Une commande journalctl filtrée avec grep qui affiche la ligne qui indique l'arrêt du service
+
+```powershell
+
+```
+
+#### 🌞 S'amuser à kill le processus
+
+```powershell
+
+```
+
+#### 🌞 Affiner la définition du service
+
+```powershell
+
+```
