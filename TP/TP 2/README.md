@@ -188,41 +188,41 @@ Connection to 10.1.1.101 closed.
 
 ```powershell
 # ZIP
-[kevin@localhost ~]$ file meow
+[kevin@Tp2 ~]$ file meow
 meow: Zip archive data, at least v2.0 to extract
-[kevin@localhost ~]$ mv meow meow.zip
-[kevin@localhost ~]$ sudo dnf install unzip
-[kevin@localhost ~]$ sudo unzip meow.zip
+[kevin@Tp2 ~]$ mv meow meow.zip
+[kevin@Tp2 ~]$ sudo dnf install unzip
+[kevin@Tp2 ~]$ sudo unzip meow.zip
 Archive:  meow.zip
   inflating: meow
 # XZ
-[kevin@localhost ~]$ file meow
+[kevin@Tp2 ~]$ file meow
 meow: XZ compressed data
-[kevin@localhost ~]$ mv meow meow.xz
-[kevin@localhost ~]$ sudo unxz meow.xz
+[kevin@Tp2 ~]$ mv meow meow.xz
+[kevin@Tp2 ~]$ sudo unxz meow.xz
 # BZIP2
-[kevin@localhost ~]$ file meow
+[kevin@Tp2 ~]$ file meow
 meow: bzip2 compressed data, block size = 900k
-[kevin@localhost ~]$ sudo dnf install bzip2
-[kevin@localhost ~]$ mv meow meow.bz2
-[kevin@localhost ~]$ bzip2 -d meow.bz2
+[kevin@Tp2 ~]$ sudo dnf install bzip2
+[kevin@Tp2 ~]$ mv meow meow.bz2
+[kevin@Tp2 ~]$ bzip2 -d meow.bz2
 # RAR
-[kevin@localhost ~]$ file meow
+[kevin@Tp2 ~]$ file meow
 meow: RAR archive data, v5
-[kevin@localhost ~]$ sudo mv meow meow.rar
-[kevin@localhost ~]$ sudo dnf install https://download1.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-8.noarch.rpm
-[kevin@localhost ~]$ sudo dnf install unrar
-[kevin@localhost ~]$ sudo unrar e meow.rar
+[kevin@Tp2 ~]$ sudo mv meow meow.rar
+[kevin@Tp2 ~]$ sudo dnf install https://download1.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-8.noarch.rpm
+[kevin@Tp2 ~]$ sudo dnf install unrar
+[kevin@Tp2 ~]$ sudo unrar e meow.rar
 # GZIP
-[kevin@localhost ~]$ file meow
+[kevin@Tp2 ~]$ file meow
 meow: gzip compressed data, from Unix, original size modulo 2^32 145049600
-[kevin@localhost ~]$ mv meow meow.gz
-[kevin@localhost ~]$ sudo gunzip meow.gz
+[kevin@Tp2 ~]$ mv meow meow.gz
+[kevin@Tp2 ~]$ sudo gunzip meow.gz
 # TAR
-[kevin@localhost ~]$ file meow
+[kevin@Tp2 ~]$ file meow
 meow: POSIX tar archive (GNU)
-[kevin@localhost ~]$ mv meow meow.tar
-[kevin@localhost ~]$ tar -xf meow.tar
+[kevin@Tp2 ~]$ mv meow meow.tar
+[kevin@Tp2 ~]$ tar -xf meow.tar
 ```
 
 #### 🌞 Dans le dossier dawa/, déterminer le chemin vers

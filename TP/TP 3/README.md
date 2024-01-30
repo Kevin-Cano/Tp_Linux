@@ -110,3 +110,37 @@ Warning: NOT_ENABLED: 22:tcp
 PS C:\Users\kevca> ssh kevin@10.1.1.101 -p 29207
 ```
 
+## II. Service HTTP
+
+### 1. Mise en place
+
+#### 🌞 Installer le serveur NGINX
+
+```powershell
+[kevin@TP ~]$ sudo dnf install nginx
+Last metadata expiration check: 1:35:47 ago on Mon 29 Jan 2024 02:59:36 PM CET.
+Package nginx-1:1.20.1-14.el9_2.1.x86_64 is already installed.
+Dependencies resolved.
+Nothing to do.
+Complete!
+```
+
+#### 🌞 Démarrer le service NGINX 
+
+```powershell
+[kevin@TP ~]$ sudo systemctl start nginx
+```
+
+#### 🌞 Déterminer sur quel port tourne NGINX
+
+```powershell
+[kevin@TP ~]$ sudo ss -alnpt | grep nginx
+[kevin@TP ~]$ sudo firewall-cmd --add-port=80/tcp --permanent
+[kevin@TP ~]$ sudo firewall-cmd --reload
+```
+
+#### 🌞 Déterminer les processus liés au service NGINX
+
+```powershell
+
+```
